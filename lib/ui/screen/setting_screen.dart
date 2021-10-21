@@ -12,18 +12,26 @@ class SettingScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Setting'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            BlocBuilder<WeatherBloc, WeatherState>(
-              builder: (context, state) {
-                return Text(state.weather.city,
-                    style: const TextStyle(fontSize: 33));
-              },
+      body: BlocBuilder<WeatherBloc, WeatherState>(
+        builder: (context, state) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextField(
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    hintText: state.weather.city,
+                  ),
+                  onSubmitted: (text) {
+                    _bloc.add(GetWeatherEvent(text));
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

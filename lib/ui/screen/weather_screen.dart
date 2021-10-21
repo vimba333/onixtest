@@ -12,28 +12,23 @@ class WeatherScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Weather'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            BlocBuilder<WeatherBloc, WeatherState>(
-              builder: (context, state) {
-                return Text(state.weather.city,
-                    style: const TextStyle(fontSize: 33));
-              },
+      body: BlocBuilder<WeatherBloc, WeatherState>(
+        builder: (context, state) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(state.weather.city, style: const TextStyle(fontSize: 33)),
+                Text(state.weather.temp.toString(),
+                    style: const TextStyle(fontSize: 64)),
+              ],
             ),
-            BlocBuilder<WeatherBloc, WeatherState>(
-              builder: (context, state) {
-                return Text(state.weather.temp.toString(),
-                    style: const TextStyle(fontSize: 64));
-              },
-            ),
-          ],
-        ),
+          );
+        },
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _bloc.add(GetWeatherEvent('Paris'));
           Navigator.pushNamed(context, '/setting');
         },
         tooltip: 'Increment',

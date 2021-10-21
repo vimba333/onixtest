@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:onixtest/ui/screen/weather_screen.dart';
 import 'package:onixtest/ui/screen/setting_screen.dart';
 
-var weatherSctreen = "/";
+var weatherSctreen = "/weather";
 var settingSctreen = "/setting";
 
 class MyRouter extends StatelessWidget {
