@@ -8,7 +8,7 @@ class WeatherScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WeatherBloc _bloc = BlocProvider.of(context);
-    _bloc.add(GetWeatherEvent('Киев'));
+    _bloc.add(WeatherInitializationEvent());
     return Scaffold(
       appBar: AppBar(
         title: const Text('Weather'),
@@ -22,7 +22,7 @@ class WeatherScreen extends StatelessWidget {
                 children: <Widget>[
                   Text(state.weather.city,
                       style: const TextStyle(fontSize: 33)),
-                  Text(state.weather.temp.toString(),
+                  Text(state.weather.temperature.toString(),
                       style: const TextStyle(fontSize: 64)),
                 ],
               ),

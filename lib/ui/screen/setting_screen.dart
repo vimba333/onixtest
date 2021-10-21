@@ -20,6 +20,7 @@ class SettingScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   TextField(
+                    textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       hintText: state.weather.city,
