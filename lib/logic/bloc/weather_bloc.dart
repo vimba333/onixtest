@@ -5,9 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class WeatherEvent {}
 
-class GetWeatherEvent extends WeatherEvent {
+class GetByCityWeatherEvent extends WeatherEvent {
   final String cityName;
-  GetWeatherEvent(this.cityName);
+  GetByCityWeatherEvent(this.cityName);
 }
 
 class WeatherInitializationEvent extends WeatherEvent {}
@@ -29,32 +29,49 @@ class WeatherOk extends WeatherState {
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final WeatherRepository _weatherRepository = WeatherRepository();
+  Weather? currentWeather;
   WeatherBloc() : super(WeatherOk(Weather.defaultWeather()));
 
   @override
   Stream<WeatherState> mapEventToState(
     WeatherEvent event,
   ) async* {
-    if (event is GetWeatherEvent) {
+    if (event is GetByCityWeatherEvent) {
       yield WeatherLoaded();
       final weather = await _weatherRepository.getWeather(event.cityName);
+      currentWeather = weather;
       yield WeatherOk(weather);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('city', event.cityName);
+      currentWeather = weather;
     } else if (event is CelsiusEvent) {
+      currentWeather!.setC();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('units', 'c');
+      yield WeatherOk(currentWeather!);
     } else if (event is FahrenheitEvent) {
+      if (currentWeather == null) return;
+      currentWeather!.setF();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('units', 'f');
+      yield WeatherOk(currentWeather!);
     } else if (event is WeatherInitializationEvent) {
       yield WeatherLoaded();
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       String? city = prefs.getString('city');
+      String? units = prefs.getString('units');
+      Weather weather;
       if (city != null) {
-        final weather = await _weatherRepository.getWeather(city);
-        yield WeatherOk(weather);
+        weather = await _weatherRepository.getWeather(city);
       } else {
         final defaultCity = Weather.defaultWeather().city;
-        final weather = await _weatherRepository.getWeather(defaultCity);
-        yield WeatherOk(weather);
+        weather = await _weatherRepository.getWeather(defaultCity);
       }
+      if (units != null && units == 'f') {
+        weather.setF();
+      }
+      yield WeatherOk(weather);
+      currentWeather = weather;
     }
   }
 }

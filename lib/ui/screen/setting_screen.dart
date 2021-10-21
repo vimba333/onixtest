@@ -26,8 +26,20 @@ class SettingScreen extends StatelessWidget {
                       hintText: state.weather.city,
                     ),
                     onSubmitted: (text) {
-                      _bloc.add(GetWeatherEvent(text));
+                      _bloc.add(GetByCityWeatherEvent(text));
                       Navigator.pop(context);
+                    },
+                  ),
+                  Text((state.weather.isCelsius()) ? "℃" : "℉",
+                      style: const TextStyle(fontSize: 33)),
+                  Switch(
+                    value: state.weather.isCelsius(),
+                    onChanged: (value) {
+                      if (state.weather.isCelsius()) {
+                        _bloc.add(FahrenheitEvent());
+                      } else {
+                        _bloc.add(CelsiusEvent());
+                      }
                     },
                   ),
                 ],

@@ -6,20 +6,33 @@ enum UnitsEnum {
 class Weather {
   final double temp;
   final String city;
-  final UnitsEnum units;
+  UnitsEnum units = UnitsEnum.celsius;
   Weather({
     required this.temp,
     required this.city,
-    this.units = UnitsEnum.celsius,
   });
+
+  setC() {
+    units = UnitsEnum.celsius;
+  }
+
+  setF() {
+    units = UnitsEnum.fahrenheit;
+  }
+
+  isCelsius() {
+    if (units == UnitsEnum.celsius) return true;
+    return false;
+  }
 
   static Weather defaultWeather() {
     return Weather(
       temp: 0,
-      city: 'Paris',
+      city: 'Киев',
     );
   }
 
-  double get temperature =>
-      (units == UnitsEnum.celsius) ? temp : (temp * 9 / 5 + 32);
+  double get temperature => (units == UnitsEnum.celsius)
+      ? temp
+      : double.parse((temp * 9 / 5 + 32).toStringAsFixed(2));
 }

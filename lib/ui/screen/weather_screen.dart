@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onixtest/import_bloc.dart';
+import 'package:onixtest/import_model.dart';
 
 class WeatherScreen extends StatelessWidget {
   const WeatherScreen({Key? key}) : super(key: key);
@@ -10,9 +11,6 @@ class WeatherScreen extends StatelessWidget {
     WeatherBloc _bloc = BlocProvider.of(context);
     _bloc.add(WeatherInitializationEvent());
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Weather'),
-      ),
       body: BlocBuilder<WeatherBloc, WeatherState>(
         builder: (context, state) {
           if (state is WeatherOk) {
@@ -24,6 +22,16 @@ class WeatherScreen extends StatelessWidget {
                       style: const TextStyle(fontSize: 33)),
                   Text(state.weather.temperature.toString(),
                       style: const TextStyle(fontSize: 64)),
+                  TextButton(
+                    onPressed: () {
+                      if (state.weather.isCelsius()) {
+                        _bloc.add(FahrenheitEvent());
+                      } else {
+                        _bloc.add(CelsiusEvent());
+                      }
+                    },
+                    child: Text((state.weather.isCelsius()) ? "℃" : "℉"),
+                  ),
                 ],
               ),
             );
