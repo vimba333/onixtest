@@ -14,23 +14,34 @@ class SettingScreen extends StatelessWidget {
       ),
       body: BlocBuilder<WeatherBloc, WeatherState>(
         builder: (context, state) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TextField(
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: state.weather.city,
+          if (state is WeatherOk) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      hintText: state.weather.city,
+                    ),
+                    onSubmitted: (text) {
+                      _bloc.add(GetWeatherEvent(text));
+                      Navigator.pop(context);
+                    },
                   ),
-                  onSubmitted: (text) {
-                    _bloc.add(GetWeatherEvent(text));
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-          );
+                ],
+              ),
+            );
+          } else {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[
+                  CircularProgressIndicator(),
+                ],
+              ),
+            );
+          }
         },
       ),
     );

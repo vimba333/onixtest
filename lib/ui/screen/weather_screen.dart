@@ -8,22 +8,35 @@ class WeatherScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WeatherBloc _bloc = BlocProvider.of(context);
+    _bloc.add(GetWeatherEvent('Киев'));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Weather'),
       ),
       body: BlocBuilder<WeatherBloc, WeatherState>(
         builder: (context, state) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(state.weather.city, style: const TextStyle(fontSize: 33)),
-                Text(state.weather.temp.toString(),
-                    style: const TextStyle(fontSize: 64)),
-              ],
-            ),
-          );
+          if (state is WeatherOk) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(state.weather.city,
+                      style: const TextStyle(fontSize: 33)),
+                  Text(state.weather.temp.toString(),
+                      style: const TextStyle(fontSize: 64)),
+                ],
+              ),
+            );
+          } else {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[
+                  CircularProgressIndicator(),
+                ],
+              ),
+            );
+          }
         },
       ),
 

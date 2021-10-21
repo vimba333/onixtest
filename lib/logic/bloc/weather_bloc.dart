@@ -9,22 +9,29 @@ class GetWeatherEvent extends WeatherEvent {
   GetWeatherEvent(this.cityName);
 }
 
-class WeatherState {
+class WeatherState {}
+
+class WeatherLoaded extends WeatherState {
+  WeatherLoaded();
+}
+
+class WeatherOk extends WeatherState {
   final Weather weather;
-  WeatherState(this.weather);
+  WeatherOk(this.weather);
 }
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final WeatherRepository _weatherRepository = WeatherRepository();
-  WeatherBloc() : super(WeatherState(Weather.defaultWeather()));
+  WeatherBloc() : super(WeatherOk(Weather.defaultWeather()));
 
   @override
   Stream<WeatherState> mapEventToState(
     WeatherEvent event,
   ) async* {
     if (event is GetWeatherEvent) {
+      yield WeatherLoaded();
       final weather = await _weatherRepository.getWeather(event.cityName);
-      yield WeatherState(weather);
+      yield WeatherOk(weather);
     }
   }
 }
