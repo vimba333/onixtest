@@ -5,9 +5,12 @@ class WeatherRepository {
   Future<Weather> getWeather(String cityName) async {
     try {
       Map<String, dynamic> data =
-          await OpenweathermapService.currentWeatherByCity('Киев');
+          await OpenweathermapService.currentWeatherByCity(cityName);
 
-      return Weather(double.parse(data["main"]["temp"].toString()));
+      return Weather(
+        temp: double.parse(data["main"]["temp"].toString()),
+        city: cityName,
+      );
     } catch (e) {
       return Weather.defaultWeather();
     }

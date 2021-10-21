@@ -1,8 +1,12 @@
 class Weather {
   final double temp;
-  Weather(this.temp);
+  final String city;
+  Weather({required this.temp, required this.city});
 
   static Weather defaultWeather() {
-    return Weather(3);
+    return Weather(
+      temp: 0,
+      city: 'Kropyvnytskyi',
+    );
   }
 }

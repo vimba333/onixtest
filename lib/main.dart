@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onixtest/ui/page/weather_page.dart';
+import 'package:onixtest/ui/my_router.dart';
 import 'package:onixtest/import_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         ),
         home: BlocProvider(
           create: (context) => WeatherBloc(),
-          child: const WeatherPage(),
+          child: const MyRouter(),
         ));
   }
 }
