@@ -50,7 +50,10 @@ class SettingScreen extends StatelessWidget {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             border: const OutlineInputBorder(),
-                            hintText: state.weather.city,
+                            labelText: state.weather.city,
+                            labelStyle: const TextStyle(
+                              color: Colors.white,
+                            ),
                             hintStyle: const TextStyle(color: Colors.white),
                           ),
                           onSubmitted: (text) {
