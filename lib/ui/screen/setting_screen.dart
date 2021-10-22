@@ -21,7 +21,7 @@ class SettingScreen extends StatelessWidget {
           ),
         ),
         child: Container(
-          margin: const EdgeInsets.only(top: 77),
+          margin: const EdgeInsets.only(top: 55),
           child: BlocBuilder<WeatherBloc, WeatherState>(
             builder: (context, state) {
               if (state is WeatherOk) {
@@ -31,7 +31,7 @@ class SettingScreen extends StatelessWidget {
                     children: <Widget>[
                       Text((state.weather.isCelsius()) ? "℃" : "℉",
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 33)),
+                              color: Colors.white, fontSize: 55)),
                       Switch(
                         value: state.weather.isCelsius(),
                         onChanged: (value) {
@@ -55,7 +55,7 @@ class SettingScreen extends StatelessWidget {
                           Navigator.pop(context);
                         },
                         style:
-                            const TextStyle(color: Colors.white, fontSize: 22),
+                            const TextStyle(color: Colors.white, fontSize: 33),
                       ),
                     ],
                   ),

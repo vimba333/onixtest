@@ -4,13 +4,24 @@ enum UnitsEnum {
 }
 
 class Weather {
+  final String iconCode;
   final double temp;
   final String city;
+  final double humidity;
   UnitsEnum units = UnitsEnum.celsius;
   Weather({
     required this.temp,
     required this.city,
+    required this.iconCode,
+    required this.humidity,
   });
+
+  String get tempFormat =>
+      ((units == UnitsEnum.celsius)
+          ? ((temp).toStringAsFixed(0)).toString()
+          : ((temp * 9 / 5 + 32).toStringAsFixed(0)).toString()) +
+      ((isCelsius()) ? "℃" : "℉");
+  String get humidityFormat => humidity.toString() + "%";
 
   setC() {
     units = UnitsEnum.celsius;
@@ -29,12 +40,8 @@ class Weather {
     return Weather(
       temp: 0,
       city: 'Киев',
+      iconCode: '01d',
+      humidity: 50,
     );
   }
-
-  String get temperature =>
-      ((units == UnitsEnum.celsius)
-          ? ((temp).toStringAsFixed(0)).toString()
-          : ((temp * 9 / 5 + 32).toStringAsFixed(0)).toString()) +
-      ((isCelsius()) ? "℃" : "℉");
 }

@@ -10,6 +10,8 @@ class WeatherRepository {
       return Weather(
         temp: double.parse(data["main"]["temp"].toString()),
         city: cityName,
+        iconCode: data['weather'][0]['icon'],
+        humidity: double.parse(data["main"]["humidity"].toString()),
       );
     } catch (e) {
       return Weather.defaultWeather();

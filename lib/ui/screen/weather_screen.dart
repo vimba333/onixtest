@@ -26,14 +26,20 @@ class WeatherScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
+                      Image.network(
+                          "http://openweathermap.org/img/wn/${state.weather.iconCode}@2x.png",
+                          scale: 0.8),
                       Text(state.weather.city,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 33,
                           )),
-                      Text(state.weather.temperature.toString(),
+                      Text(state.weather.tempFormat.toString(),
                           style: const TextStyle(
                               color: Colors.white, fontSize: 64)),
+                      Text(state.weather.humidityFormat.toString(),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 33)),
                     ],
                   ),
                 );

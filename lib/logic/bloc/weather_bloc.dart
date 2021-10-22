@@ -5,16 +5,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class WeatherEvent {}
 
-class GetByCityWeatherEvent extends WeatherEvent {
-  final String cityName;
-  GetByCityWeatherEvent(this.cityName);
-}
-
 class WeatherInitializationEvent extends WeatherEvent {}
 
 class CelsiusEvent extends WeatherEvent {}
 
 class FahrenheitEvent extends WeatherEvent {}
+
+class GetByCityWeatherEvent extends WeatherEvent {
+  final String cityName;
+  GetByCityWeatherEvent(this.cityName);
+}
 
 class WeatherState {}
 
