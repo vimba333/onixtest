@@ -21,7 +21,10 @@ class Weather {
           ? ((temp).toStringAsFixed(0)).toString()
           : ((temp * 9 / 5 + 32).toStringAsFixed(0)).toString()) +
       ((isCelsius()) ? "℃" : "℉");
+
   String get humidityFormat => humidity.toString() + "%";
+
+  String get unitsFormat => (isCelsius()) ? "℃" : "℉";
 
   setUnitsCelsius() {
     units = UnitsEnum.celsius;

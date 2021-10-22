@@ -29,11 +29,12 @@ class SettingScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Text((state.weather.isCelsius()) ? "℃" : "℉",
+                      Text(state.weather.unitsFormat,
                           style: const TextStyle(
                               color: Colors.white, fontSize: 33)),
                       Switch(
                         value: state.weather.isCelsius(),
+                        activeColor: Colors.white,
                         onChanged: (value) {
                           if (state.weather.isCelsius()) {
                             _bloc.add(FahrenheitEvent());
