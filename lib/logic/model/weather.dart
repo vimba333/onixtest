@@ -32,7 +32,9 @@ class Weather {
     );
   }
 
-  double get temperature => (units == UnitsEnum.celsius)
-      ? temp
-      : double.parse((temp * 9 / 5 + 32).toStringAsFixed(2));
+  String get temperature =>
+      ((units == UnitsEnum.celsius)
+          ? ((temp).toStringAsFixed(0)).toString()
+          : ((temp * 9 / 5 + 32).toStringAsFixed(0)).toString()) +
+      ((isCelsius()) ? "℃" : "℉");
 }

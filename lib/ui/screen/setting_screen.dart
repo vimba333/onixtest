@@ -11,51 +11,68 @@ class SettingScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Setting'),
+        backgroundColor: const Color(0xff363f56),
       ),
-      body: BlocBuilder<WeatherBloc, WeatherState>(
-        builder: (context, state) {
-          if (state is WeatherOk) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  TextField(
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      hintText: state.weather.city,
-                    ),
-                    onSubmitted: (text) {
-                      _bloc.add(GetByCityWeatherEvent(text));
-                      Navigator.pop(context);
-                    },
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/w2.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Container(
+          margin: const EdgeInsets.only(top: 77),
+          child: BlocBuilder<WeatherBloc, WeatherState>(
+            builder: (context, state) {
+              if (state is WeatherOk) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text((state.weather.isCelsius()) ? "℃" : "℉",
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 33)),
+                      Switch(
+                        value: state.weather.isCelsius(),
+                        onChanged: (value) {
+                          if (state.weather.isCelsius()) {
+                            _bloc.add(FahrenheitEvent());
+                          } else {
+                            _bloc.add(CelsiusEvent());
+                          }
+                        },
+                      ),
+                      TextField(
+                        textCapitalization: TextCapitalization.sentences,
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          hintText: state.weather.city,
+                          hintStyle: const TextStyle(color: Colors.white),
+                        ),
+                        onSubmitted: (text) {
+                          _bloc.add(GetByCityWeatherEvent(text));
+                          Navigator.pop(context);
+                        },
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 22),
+                      ),
+                    ],
                   ),
-                  Text((state.weather.isCelsius()) ? "℃" : "℉",
-                      style: const TextStyle(fontSize: 33)),
-                  Switch(
-                    value: state.weather.isCelsius(),
-                    onChanged: (value) {
-                      if (state.weather.isCelsius()) {
-                        _bloc.add(FahrenheitEvent());
-                      } else {
-                        _bloc.add(CelsiusEvent());
-                      }
-                    },
+                );
+              } else {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const <Widget>[
+                      CircularProgressIndicator(),
+                    ],
                   ),
-                ],
-              ),
-            );
-          } else {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  CircularProgressIndicator(),
-                ],
-              ),
-            );
-          }
-        },
+                );
+              }
+            },
+          ),
+        ),
       ),
     );
   }
