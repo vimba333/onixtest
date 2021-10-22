@@ -45,15 +45,15 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       await prefs.setString('city', event.cityName);
       currentWeather = weather;
     } else if (event is CelsiusEvent) {
-      currentWeather!.setC();
+      currentWeather!.setUnitsCelsius();
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('units', 'c');
+      await prefs.setString('units', 'celsius');
       yield WeatherOk(currentWeather!);
     } else if (event is FahrenheitEvent) {
       if (currentWeather == null) return;
-      currentWeather!.setF();
+      currentWeather!.setUnitsFahrenheit();
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('units', 'f');
+      await prefs.setString('units', 'fahrenheit');
       yield WeatherOk(currentWeather!);
     } else if (event is WeatherInitializationEvent) {
       yield WeatherLoaded();
@@ -67,8 +67,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         final defaultCity = Weather.defaultWeather().city;
         weather = await _weatherRepository.getWeather(defaultCity);
       }
-      if (units != null && units == 'f') {
-        weather.setF();
+      if (units != null && units == 'fahrenheit') {
+        weather.setUnitsFahrenheit()();
       }
       yield WeatherOk(weather);
       currentWeather = weather;

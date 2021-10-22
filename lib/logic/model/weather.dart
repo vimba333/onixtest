@@ -23,11 +23,11 @@ class Weather {
       ((isCelsius()) ? "℃" : "℉");
   String get humidityFormat => humidity.toString() + "%";
 
-  setC() {
+  setUnitsCelsius() {
     units = UnitsEnum.celsius;
   }
 
-  setF() {
+  setUnitsFahrenheit() {
     units = UnitsEnum.fahrenheit;
   }
 

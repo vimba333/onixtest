@@ -31,7 +31,7 @@ class SettingScreen extends StatelessWidget {
                     children: <Widget>[
                       Text((state.weather.isCelsius()) ? "℃" : "℉",
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 55)),
+                              color: Colors.white, fontSize: 33)),
                       Switch(
                         value: state.weather.isCelsius(),
                         onChanged: (value) {
@@ -42,20 +42,23 @@ class SettingScreen extends StatelessWidget {
                           }
                         },
                       ),
-                      TextField(
-                        textCapitalization: TextCapitalization.sentences,
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          hintText: state.weather.city,
-                          hintStyle: const TextStyle(color: Colors.white),
+                      Container(
+                        margin: const EdgeInsets.all(10),
+                        child: TextField(
+                          textCapitalization: TextCapitalization.sentences,
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            hintText: state.weather.city,
+                            hintStyle: const TextStyle(color: Colors.white),
+                          ),
+                          onSubmitted: (text) {
+                            _bloc.add(GetByCityWeatherEvent(text));
+                            Navigator.pop(context);
+                          },
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 33),
                         ),
-                        onSubmitted: (text) {
-                          _bloc.add(GetByCityWeatherEvent(text));
-                          Navigator.pop(context);
-                        },
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 33),
                       ),
                     ],
                   ),
